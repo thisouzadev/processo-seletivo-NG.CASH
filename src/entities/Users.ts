@@ -16,6 +16,7 @@ import {
 	Length
 } from "class-validator"
 
+import * as bcrypt from "bcryptjs"
 import { Accounts } from './Accounts'
 
 @Entity('users')
@@ -38,4 +39,8 @@ export class Users {
 	@OneToOne(() => Accounts)
   @JoinColumn()
   accounts: Accounts;
+
+	hashPassword() {
+    this.password = bcrypt.hashSync(this.password, 8);
+  }
 }

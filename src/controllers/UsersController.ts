@@ -19,9 +19,11 @@ export class UsersController {
 			res.status(400).send(errors)
 			return
 		}
+
+		user.hashPassword();
 		try {
 			
-			const newUser = usersRepository.create({ username, password })
+			const newUser = usersRepository.create(user)
 			
 			await usersRepository.save(newUser)
 			const accounts = new Accounts()
