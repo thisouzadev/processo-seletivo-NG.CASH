@@ -1,12 +1,12 @@
 import { Router } from 'express'
-import { RoomController } from './controllers/RoomController'
-import { SubjectController } from './controllers/SubjectController'
+import { checkJwt } from "./middlewares/checkJwt";
+import { UsersController } from './controllers/UsersController'
 
 const routes = Router()
 
-routes.post('/subject', new SubjectController().create)
-routes.post('/room', new RoomController().create)
-routes.get('/room', new RoomController().list)
-routes.post('/room/:idRoom/create', new RoomController().createVideo)
-routes.post('/room/:idRoom/subject', new RoomController().roomSubject)
+routes.post('/users', new UsersController().create)
+routes.get('/users', new UsersController().list)
+
+routes.post("/login", new UsersController().login);
+
 export default routes

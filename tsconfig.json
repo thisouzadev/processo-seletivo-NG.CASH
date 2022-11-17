@@ -1,7 +1,11 @@
 {
 	"compilerOptions": {
 		"target": "es2018",
-		"lib": ["es5", "es6", "ES2018"],
+		"lib": [
+			"es5",
+			"es6",
+			"ES2018"
+		],
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"module": "commonjs",
@@ -15,8 +19,13 @@
 		"noImplicitAny": true,
 		"strictPropertyInitialization": false
 	},
-	"include": ["src/**/*"],
-	"exclude": ["node_modules", "dist"],
+	"include": [
+		"src/"
+	],
+	"exclude": [
+		"node_modules",
+		"dist"
+	],
 	"ts-node": {
 		"files": true
 	}
