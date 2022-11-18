@@ -20,7 +20,6 @@ export const validateToken = async (req: Request, res: Response, next: NextFunct
     if (!authorization) return res.status(401).json({ message: 'Token not found' });
     const Payload = validate(authorization);
     req.user = Payload.payload
-    console.log(req.user);
     
     next();
   } catch (error) {

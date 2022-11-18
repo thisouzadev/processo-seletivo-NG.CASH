@@ -18,9 +18,9 @@ export class Accounts {
 	id: number
 
 	@Column()
-	balance?: number
+	balance: number
 
 	@OneToMany(() => Transactions, (transactions: Transactions) => transactions.accounts, {cascade: true})
-	transactions: Transactions[]
+	transactions: Transactions
 
 }

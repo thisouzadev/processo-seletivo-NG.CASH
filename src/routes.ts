@@ -9,5 +9,5 @@ routes.post('/users', new UsersController().create)
 routes.post("/login", new UsersController().login)
 
 routes.get("/balance", validateToken, new AccountsController().list)
-routes.post("/transactions", new AccountsController().transactionsCreate)
+routes.post("/transactions", validateToken, new AccountsController().transactionsCreate)
 export default routes
