@@ -24,12 +24,22 @@ export class AccountsController {
 
   async transactionsCreate(req: Request, res: Response) {
    const { value, id } = req.body
-
+   const  userId  = req.user
+   const getMyBalance = await usersRepository.findOne({
+    where: { id: parseInt(req.user.id) },
+    relations: {
+      accounts: true,
+    },
+  })
+  const getMyBalanceId =  getMyBalance?.accounts.id
    let transactions = new Transactions()
    transactions.value = value
-  //  transactions.accounts = req.user.id
+   
    let accounts = new Accounts()
-   accounts.transactions = [transactions]
+  //  accounts = getMyBalanceId
+
+   transactions.accounts2 = id
+   transactions.accounts = accounts
    
    try {
      const newTransactions = transactionsRepository.create(transactions)

@@ -15,14 +15,14 @@ import {
 	@ManyToOne((type) => Accounts, (accounts: Accounts) => accounts.transactions)
 	@JoinColumn({
 		name: 'debitedAccountId',
-		referencedColumnName: "accounts",
+		// referencedColumnName: "accounts",
 	})
 	accounts: Accounts
 
 	@ManyToOne((type) => Accounts, (accounts: Accounts) => accounts.transactions)
 	@JoinColumn({
 		name: 'creditedAccountId',
-		referencedColumnName: "accounts",
+		// referencedColumnName: "accounts",
 	})
 	accounts2: Accounts
 
