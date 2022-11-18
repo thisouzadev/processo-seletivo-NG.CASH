@@ -1,4 +1,10 @@
 {
+	"typeRoots": [
+		"./src/@types",
+		"./custom_typings",
+		"./@types",
+		"./node_modules/@types"
+	],
 	"compilerOptions": {
 		"target": "es2018",
 		"lib": [
@@ -28,5 +34,13 @@
 	],
 	"ts-node": {
 		"files": true
-	}
+	},
+	"baseUrl": "./",
+	"paths": {
+		"*": [
+			"node_modules/@types/*",
+			"*"
+		]
+	},
+	"skipLibCheck": true,
 }

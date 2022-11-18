@@ -5,6 +5,7 @@ import {
 	JoinColumn,
 	PrimaryGeneratedColumn,
 	Unique,
+	BeforeInsert,
 } from 'typeorm'
 
 import {
@@ -33,12 +34,12 @@ export class Users {
 	@Column()
 	@IsString()
   @MinLength(8)
-	@Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]{8,}).*$/, {message: 'password weak'})
+	@Matches(/^(?=.*?[A-Z])(?=.*?[0-9]).{8,}$/, {message: 'password weak'})
 	password: string;
 
-	@OneToOne(() => Accounts)
-  @JoinColumn()
-  accounts: Accounts;
+	@OneToOne(() => Accounts, { "cascade": true })
+	@JoinColumn({ name: 'accountId' })
+	accounts: Accounts
 
 	hashPassword() {
     this.password = bcrypt.hashSync(this.password, 8);

@@ -7,26 +7,29 @@ import {
 	CreateDateColumn,
 } from 'typeorm'
  import { Accounts } from './Accounts'
-
-@Entity('transactions')
-export class Transactions {
+ @Entity('transactions')
+ export class Transactions {
 	@PrimaryGeneratedColumn()
 	id: number
 
-	@ManyToOne(() => Accounts, accounts => accounts.transactions)
-	@JoinColumn({ name: 'debitedAccountId' })
+	@ManyToOne((type) => Accounts, (accounts: Accounts) => accounts.transactions)
+	@JoinColumn({
+		name: 'debitedAccountId',
+		referencedColumnName: "accounts",
+	})
 	accounts: Accounts
 
-	@ManyToOne(() => Accounts, accounts => accounts.transactions)
-	@JoinColumn({ name: 'creditedAccountId' })
+	@ManyToOne((type) => Accounts, (accounts: Accounts) => accounts.transactions)
+	@JoinColumn({
+		name: 'creditedAccountId',
+		referencedColumnName: "accounts",
+	})
 	accounts2: Accounts
 
 	@Column()
 	value: number
 
-	@CreateDateColumn({ 
-		type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)"
-	 })
-	public created_at: Date
+	@CreateDateColumn()
+	createdAt: Date
 
 }

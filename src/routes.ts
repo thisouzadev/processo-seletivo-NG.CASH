@@ -1,12 +1,13 @@
+import { AccountsController } from './controllers/AccountsController';
 import { Router } from 'express'
-import { checkJwt } from "./middlewares/checkJwt";
+import { validateToken } from "./middlewares/auth";
 import { UsersController } from './controllers/UsersController'
 
 const routes = Router()
 
 routes.post('/users', new UsersController().create)
-routes.get('/users', new UsersController().list)
+routes.post("/login", new UsersController().login)
 
-routes.post("/login", new UsersController().login);
-
+routes.get("/balance", validateToken, new AccountsController().list)
+routes.post("/transactions", new AccountsController().transactionsCreate)
 export default routes

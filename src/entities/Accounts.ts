@@ -1,20 +1,26 @@
 import {
+	Check,
 	Column,
 	Entity,
+	JoinColumn,
 	OneToMany,
+	OneToOne,
 	PrimaryGeneratedColumn,
 } from 'typeorm'
 
 import { Transactions } from './Transactions'
+import { Users } from './Users'
 
 @Entity('accounts')
+@Check('"balance" >= 0')
 export class Accounts {
 	@PrimaryGeneratedColumn()
 	id: number
 
 	@Column()
-	balance: number
+	balance?: number
 
-	@OneToMany(() => Transactions, (transactions) => transactions.accounts)
-	transactions: Transactions
+	@OneToMany(() => Transactions, (transactions: Transactions) => transactions.accounts, {cascade: true})
+	transactions: Transactions[]
+
 }
