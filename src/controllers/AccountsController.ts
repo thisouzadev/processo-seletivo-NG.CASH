@@ -27,40 +27,89 @@ export class AccountsController {
   async transactionsCreate(req: Request, res: Response) {
    const { value, username } = req.body
    const  userId  = req.user
-  //  console.log(userId.id);
    
-   const getMyBalance = await usersRepository.findOne({
+   const getMyUser = await usersRepository.findOne({
     where: { id: parseInt(req.user.id) },
     relations: {
       accounts: true,
     },
   })
-  // console.log(getMyBalance?.accounts.balance, 'mybalance');
-  
-  // await usersRepository.findOneOrFail({ where: username })
+  const getDestinationUser = await usersRepository.findOne({
+    where: { username: username },
+    relations: {
+      accounts: true,
+    },
+  })
+  if (!getDestinationUser) {
+    return res.status(404).json({ message: 'not found username' })
+  }
+  if (!getMyUser) {
+    return res.status(404).json({ message: 'not found' })
+  }
+
+  const destinationsAccount = await accountsRepository.findOne({
+    where: { id: getDestinationUser.accounts.id }
+  })
+  if (!destinationsAccount) {
+    return res.status(404).json({ message: 'not found destinationsAccount' })
+  }
+
+  const myAccount = await accountsRepository.findOne({
+    where: { id: getMyUser.accounts.id }
+  })
+  if (!myAccount) {
+    return res.status(404).json({ message: 'not found myAccount' })
+  }
+
   let transactions = new Transactions()
   transactions.value = value
-  let accounts = new Accounts()
-  // accounts.transactions.accounts.balance = 50
-  accounts.transactions.accounts.id = 2
-  // transactions.accounts.balance = 50
-  accounts.transactions = transactions
-  
-  
-  
-   //  transactions.accounts2 = id
-   //  transactions.accounts = accounts
-   
+  transactions.debitedAccountId = getMyUser.accounts.id
+  transactions.creditedAccountId = getDestinationUser.accounts.id
+
+  if (value > myAccount.balance ) {
+    return res.status(404).json({ message: 'value so much' })
+  }
+  myAccount.balance -= value 
+  destinationsAccount.balance += value
+
    try {
      const newTransactions = transactionsRepository.create(transactions)
      await transactionsRepository.save(transactions)
-     await accountsRepository.save(accounts)
-     console.log(transactions, 'transactions');
-     console.log(accounts.transactions, 'accounts');
+     await accountsRepository.save(myAccount)
+     await accountsRepository.save(destinationsAccount)
+
      return res.status(201).json(newTransactions)
    } catch (error) {
     console.log(error)
 			return res.status(500).json({ message: 'Internal Server Error' })
    }
   } 
+
+  async getAllMyTransactions(req:Request, res:Response) {
+    const { transactionsDate } = req.query as any as { transactionsDate: string } 
+    
+    try {
+
+      const getMyUser = await usersRepository.findOne({
+        where: { id: parseInt(req.user.id) },
+        relations: {
+          accounts: { creditTransactions: true, debiteTransactionss: true },
+        },
+      })
+      if (!getMyUser) {
+        return res.status(404).json({ message: '' })
+      }
+      
+			getMyUser.accounts.creditTransactions = getMyUser?.accounts.creditTransactions.filter(
+        (transactions) => String(transactions.createdAt.toISOString()).includes(transactionsDate)
+      )
+      getMyUser.accounts.debiteTransactionss = getMyUser?.accounts.debiteTransactionss.filter(
+        (transactions) => String(transactions.createdAt.toISOString()).includes(transactionsDate)
+      )
+			return res.status(200).json(getMyUser)
+		} catch (error) {
+			console.log(error)
+			return res.status(500).json({ message: 'Internal Server Error' })
+		}
+  }
 }

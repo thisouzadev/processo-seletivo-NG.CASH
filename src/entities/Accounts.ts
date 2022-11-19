@@ -20,7 +20,10 @@ export class Accounts {
 	@Column()
 	balance: number
 
-	@OneToMany(() => Transactions, (transactions: Transactions) => transactions.accounts, {cascade: true})
-	transactions: Transactions
+	@OneToMany(() => Transactions, (transactions: Transactions) => transactions.creditedAccount, {cascade: true})
+	creditTransactions: Transactions[]
+
+	@OneToMany(() => Transactions, (transactions: Transactions) => transactions.debitedAccount, {cascade: true})
+	debiteTransactionss: Transactions[]
 
 }

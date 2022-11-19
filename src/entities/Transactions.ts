@@ -12,22 +12,21 @@ import {
 	@PrimaryGeneratedColumn()
 	id: number
 
-	@ManyToOne((type) => Accounts, (accounts: Accounts) => accounts.transactions)
-	@JoinColumn({
-		name: 'debitedAccountId',
-		// referencedColumnName: "accounts",
-	})
-	accounts: Accounts
+	@Column()
+	debitedAccountId: number
+	@ManyToOne((type) => Accounts, (accounts: Accounts) => accounts.creditTransactions)
+	@JoinColumn({ name: 'debitedAccountId' })
+	debitedAccount: Accounts
 
-	@ManyToOne((type) => Accounts, (accounts: Accounts) => accounts.transactions)
-	@JoinColumn({
-		name: 'creditedAccountId',
-		// referencedColumnName: "accounts",
-	})
-	accounts2: Accounts
+	@Column()
+	creditedAccountId: number
+	@ManyToOne((type) => Accounts, (accounts: Accounts) => accounts.debiteTransactionss)
+	@JoinColumn({ name: 'creditedAccountId' })
+	creditedAccount: Accounts
 
 	@Column()
 	value: number
+	
 
 	@CreateDateColumn()
 	createdAt: Date
