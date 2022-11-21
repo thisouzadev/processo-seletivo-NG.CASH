@@ -26,7 +26,6 @@ export class AccountsController {
 
   async transactionsCreate(req: Request, res: Response) {
    const { value, username } = req.body
-   const  userId  = req.user
    
    const getMyUser = await usersRepository.findOne({
     where: { id: parseInt(req.user.id) },
@@ -41,10 +40,10 @@ export class AccountsController {
     },
   })
   if (!getDestinationUser) {
-    return res.status(404).json({ message: 'not found username' })
+    return res.status(404).json({ message: 'not found destination username' })
   }
   if (!getMyUser) {
-    return res.status(404).json({ message: 'not found' })
+    return res.status(404).json({ message: 'not found my user' })
   }
 
   const destinationsAccount = await accountsRepository.findOne({
@@ -67,7 +66,7 @@ export class AccountsController {
   transactions.creditedAccountId = getDestinationUser.accounts.id
 
   if (value > myAccount.balance ) {
-    return res.status(404).json({ message: 'value so much' })
+    return res.status(404).json({ message: 'you do not have enough money' })
   }
   myAccount.balance -= value 
   destinationsAccount.balance += value
