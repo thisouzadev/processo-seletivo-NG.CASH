@@ -1,7 +1,7 @@
 import React from "react";
 
-function ErrorLogin(message: any) {
+function ErrorMessage(message: any) {
   return <div>{message}</div>;
 }
 
-export default ErrorLogin;
+export default ErrorMessage;

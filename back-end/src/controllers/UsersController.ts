@@ -34,23 +34,39 @@ export class UsersController {
 			
 		} catch (error: any) {
 			console.log(error);
-			return res.status(500).json({message:error})
+		
+			return res.status(500).json(error)
 		}
 	}
 
 	async login(req: Request, res: Response) {
     let { username, password } = req.body
+		try {
     if (!(username && password)) {
-      res.status(400).send({ message:  'Not Found' })
+      res.status(400).json({ message:  'Not Found' })
     }
+		const userVerifcExist = await usersRepository.findOne({ where: { username } })
+		if (!userVerifcExist) {return res.status(401).json({ message: 'not found' })}
 
-    try {
 			let user: Users
 			 user = await usersRepository.findOneOrFail({ where: { username } })
 			 const token = createToken({ payload: user });
-			 res.send(token)
+			 res.status(200).json(token)
     } catch (error) {
-			res.status(401).send({ message: 'Not found' })
+			res.status(401).json({ message: 'Not found' })
     }
   }
+
+	async getAllUser(req: Request, res: Response) {
+		try {
+			const getAll:any = await usersRepository.find({
+				relations: {
+				accounts: true
+			}
+		},)
+		res.status(200).json(getAll)
+		} catch (error) {
+			res.status(500).json({ message: 'Internal Server Error' })
+		}
+	}
 }

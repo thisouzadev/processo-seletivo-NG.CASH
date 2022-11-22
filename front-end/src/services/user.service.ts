@@ -14,13 +14,31 @@ class UserService {
   }
 
   async register(username: string, password:string) {
-    console.log(username, password);
-    
     const response = await axios
     .post("http://localhost:3001/users", {
       username: username,
       password: password,
     })
+    return response;
+  }
+
+  async getUser(token: any){
+    const response = await axios({
+      method: 'get',
+      url: 'http://localhost:3001/balance',
+      data: {},
+      headers: { authorization: token },
+    });
+    return response;
+  }
+
+  async getAllUser(token: any){
+    const response = await axios({
+      method: 'get',
+      url: 'http://localhost:3001/users',
+      data: {},
+      headers: { authorization: token },
+    });
     return response;
   }
 }

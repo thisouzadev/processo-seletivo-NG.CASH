@@ -8,6 +8,7 @@ const routes = Router()
 
 routes.post('/users', new UsersController().create)
 routes.post("/login", new UsersController().login)
+routes.get('/users', validateToken, new UsersController().getAllUser)
 
 routes.get("/balance", validateToken, new AccountsController().list)
 routes.post("/transactions", validateToken, new AccountsController().transactionsCreate)

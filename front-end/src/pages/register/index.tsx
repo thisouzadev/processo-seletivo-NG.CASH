@@ -3,7 +3,8 @@ import ErrorLogin from "../../components/Error/index";
 import { Button, Card, Form } from "react-bootstrap";
 import "./register.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
   const [error, setError] = useState(false);
@@ -12,8 +13,8 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
   const [messageError, setMessageError] = useState("");
+  let navigate = useNavigate();
 
-  useEffect;
   const ValidateName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const minLength = 3;
     if (event?.target.value.length >= minLength) {
@@ -41,12 +42,14 @@ const Register: React.FC = () => {
 
   const handleButtonRegister = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
+
     axios
       .post("http://localhost:3001/users", {
         username: name,
         password: password,
       })
       .then(function (response) {
+        navigate("/login");
         console.log(response);
       })
       .catch(function (error) {
@@ -86,7 +89,7 @@ const Register: React.FC = () => {
             <Form.Text>pelo menos 1 número</Form.Text>
             <Form.Text>8 caracteres</Form.Text>
             <div>
-              <Link to="/">
+              <Link to="/login">
                 <Button>Voltar</Button>
               </Link>
               <Button

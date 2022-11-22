@@ -1,6 +1,26 @@
 import { createContext, useContext, ReactNode, useState } from "react";
-type authContextType = {};
-const authContextDefaultValues: authContextType = {};
+type authContextType = {
+  setUser: (user: any) => void;
+  user: {
+    accounts: {
+      id: number;
+      balance: number;
+    };
+    id: number;
+    username: string;
+  };
+};
+const authContextDefaultValues: authContextType = {
+  setUser: () => {},
+  user: {
+    accounts: {
+      id: 0,
+      balance: 0,
+    },
+    id: 0,
+    username: "",
+  },
+};
 const AuthContext = createContext(authContextDefaultValues);
 
 export function useAuth() {
@@ -12,7 +32,18 @@ type Props = {
 };
 
 export function AuthProvider({ children }: Props) {
-  const value = {};
+  const [user, setUser] = useState<authContextType["user"]>({
+    accounts: {
+      id: 0,
+      balance: 0,
+    },
+    id: 0,
+    username: "",
+  });
+  const value = {
+    setUser,
+    user,
+  };
   return (
     <>
       <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

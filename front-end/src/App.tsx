@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/Login";
 import Register from "./pages/register";
+import Transacoes from "./pages/Transacoes";
 
 import { AuthProvider } from "./store/AuthContext";
 declare function createRoutesFromElements(
@@ -19,12 +20,13 @@ interface RouteObject {
 const App: React.FC = () => {
   return (
     <div className="App">
-      {/* <AuthProvider children={undefined}> */}
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-      {/* </AuthProvider> */}
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/login/register" element={<Register />} />
+          <Route path="/transacoes" element={<Transacoes />} />
+        </Routes>
+      </AuthProvider>
     </div>
   );
 };
