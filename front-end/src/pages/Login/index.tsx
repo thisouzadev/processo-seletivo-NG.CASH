@@ -77,7 +77,7 @@ const Login: React.FC = () => {
             />
           </label>
           <Button
-            variant="primary"
+            variant="dark"
             style={{ marginTop: "0.5rem", marginRight: "0.5rem" }}
             disabled={submit()}
             onClick={signup}
@@ -86,7 +86,7 @@ const Login: React.FC = () => {
           </Button>
           <Link to="register">
             <Button
-              variant="outline-primary"
+              variant="outline-dark"
               style={{ marginTop: "0.5rem", marginLeft: "0.5rem" }}
             >
               Criar conta

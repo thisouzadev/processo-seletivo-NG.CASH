@@ -1,0 +1,60 @@
+version: "3.0"
+services:
+  frontend:
+    container_name: app_frontend
+    build: ./frontend
+    expose:
+      - "8000"
+    ports:
+      - 8000:8000
+    working_dir: /app-frontend
+    depends_on:
+      backend:
+        condition: service_healthy
+    command: npm run dev
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:8000"]
+      timeout: 10s
+      retries: 5
+  backend:
+    container_name: app_backend
+    build: ./backend
+    expose:
+      - "3001"
+    ports:
+      - 3001:3001
+    working_dir: /app-backend
+    command: npm run dev
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - APP_PORT=3001
+      - JWT_SECRET=jwt_secret
+      - DB_USER=root
+      - DB_PASS=password
+      - DB_HOST=db
+      - DB_PORT=5432
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3001"]
+      timeout: 10s
+      retries: 5
+  db:
+    image: "postgres:14.2-alpine"
+    container_name: db
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=genz_cash
+    ports:
+      - "5432:5432"
+    restart: "always"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "genz_cash"]
+      timeout: 10s
+      retries: 5
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
+    driver: local

@@ -5,7 +5,6 @@ import Modal from "react-bootstrap/Modal";
 import TransactionsService from "../../services/transacoes.service";
 import UserService from "../../services/user.service";
 import { useAuth } from "../../store/AuthContext";
-import ErrorMessage from "../Error";
 
 type UserByName = [
   {
@@ -20,13 +19,11 @@ type UserByName = [
 
 function UsernameNG(props: any) {
   const [name, setName] = useState("");
-  const [smShow, setSmShow] = useState(false);
-
   const [message, setMessage] = useState("");
   const [getUsers, setGetUsers] = useState<UserByName>();
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
+  const { user, setSmShow, smShow } = useAuth();
 
-  const { user } = useAuth();
   useEffect(() => {
     new UserService()
       .getAllUser(localStorage.getItem("token"))
@@ -53,7 +50,7 @@ function UsernameNG(props: any) {
       });
   };
   const submit = () => {
-    if (value < user.accounts.balance) return false;
+    if (value <= user.accounts.balance) return false;
     return true;
   };
   return (
@@ -67,32 +64,44 @@ function UsernameNG(props: any) {
         <Modal.Title id="contained-modal-title-vcenter">Transferir</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <label className="form-label" htmlFor="name">
-          Nome
-          <input
-            className="form-control"
-            type="text"
-            id="name"
-            onChange={(event) => setName(event.target.value)}
-            placeholder="nome"
-          />
-        </label>
-        <label className="form-label" htmlFor="number">
-          valor
-          <input
-            className="form-control"
-            type="number"
-            id="number"
-            min="0"
-            value={value}
-            max={user.accounts.balance}
-            onChange={(event) => setValue(Number(event.target.value))}
-            placeholder="valor"
-          />
-        </label>
-        <Button disabled={submit()} onClick={handleClick}>
-          Depositar
-        </Button>
+        <section
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-around",
+          }}
+        >
+          <label className="form-label" htmlFor="name">
+            Nome
+            <input
+              className="form-control"
+              type="text"
+              id="name"
+              onChange={(event) => setName(event.target.value)}
+              placeholder="nome"
+            />
+          </label>
+          <label className="form-label" htmlFor="number">
+            valor R$
+            <input
+              className="form-control"
+              type="number"
+              id="number"
+              min="1"
+              value={value}
+              max={user.accounts.balance}
+              onChange={(event) => setValue(Number(event.target.value))}
+              placeholder="valor"
+            />
+          </label>
+          <Button
+            variant="outline-dark"
+            disabled={submit()}
+            onClick={handleClick}
+          >
+            Depositar
+          </Button>
+        </section>
         <Modal
           size="sm"
           show={smShow}
@@ -106,7 +115,7 @@ function UsernameNG(props: any) {
           </Modal.Header>
           <Modal.Body>{message}</Modal.Body>
         </Modal>
-        <Table striped bordered hover>
+        <Table striped bordered hover style={{ textAlign: "center" }}>
           <thead>
             <tr>
               <th>Usuários NG</th>
@@ -115,14 +124,16 @@ function UsernameNG(props: any) {
           <tbody>
             {getUsers?.map((user) => (
               <tr key={user.id}>
-                <td>{user.username}</td>;
+                <td>{user.username}</td>
               </tr>
             ))}
           </tbody>
         </Table>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
+        <Button variant="dark" onClick={props.onHide}>
+          Close
+        </Button>
       </Modal.Footer>
     </Modal>
   );

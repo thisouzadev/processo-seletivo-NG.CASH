@@ -41,6 +41,18 @@ class UserService {
     });
     return response;
   }
+
+  async getByIdUser(token: any, userId: any){
+    const response = await axios({
+      method: 'get',
+      url: 'http://localhost:3001/userById',
+      data: {
+        id: userId
+      },
+      headers: { authorization: token },
+    });
+    return response;
+  }
 }
 
 export default UserService;

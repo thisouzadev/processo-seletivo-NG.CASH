@@ -69,4 +69,16 @@ export class UsersController {
 			res.status(500).json({ message: 'Internal Server Error' })
 		}
 	}
+	async getUser(req: Request, res: Response) {
+		let { userId } = req.body
+		try {
+			const getUser:any = await usersRepository.findOne({
+				where: {id: userId}
+			}
+		)
+		res.status(200).json(getUser)
+		} catch (error) {
+			res.status(500).json({ message: 'Internal Server Error' })
+		}
+	}
 }

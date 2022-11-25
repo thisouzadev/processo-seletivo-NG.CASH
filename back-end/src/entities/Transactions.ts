@@ -20,7 +20,7 @@ import {
 
 	@Column()
 	creditedAccountId: number
-	@ManyToOne((type) => Accounts, (accounts: Accounts) => accounts.debiteTransactionss)
+	@ManyToOne((type) => Accounts, (accounts: Accounts) => accounts.debiteTransactions)
 	@JoinColumn({ name: 'creditedAccountId' })
 	creditedAccount: Accounts
 

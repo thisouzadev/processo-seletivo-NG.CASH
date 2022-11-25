@@ -14,6 +14,17 @@ class TransactionsService {
     });
     return response;
   }
+
+  async getTransactions(token: any, transactionsDate: any){
+    const response = await axios({
+      method: 'get',
+      url: 'http://localhost:3001/transactions',
+      data: {},
+      params: { transactionsDate: transactionsDate },
+      headers: { authorization: token },
+    });
+    return response;
+  }
 }
 
 export default TransactionsService;

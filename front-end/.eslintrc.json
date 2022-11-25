@@ -19,7 +19,7 @@
         "stylelint-order"
     ],
     "rules": {
-        "at-rule-empty-line-before": "always",
+        // "at-rule-empty-line-before": 1,
         "at-rule-name-case": "lower",
         "at-rule-name-space-after": "always",
         "at-rule-no-unknown": true,

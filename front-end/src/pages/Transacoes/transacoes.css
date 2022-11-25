@@ -16,8 +16,16 @@
   border-radius: 4px;
 }
 
+.filter {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-left: 25rem;
+  margin-right: 25rem;
+}
 /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
 .header a.logo {
+  border: solid;
   font-size: 25px;
   font-weight: bold;
 }

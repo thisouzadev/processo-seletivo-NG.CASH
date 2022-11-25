@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import ErrorLogin from "../../components/Error/index";
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card, Form, Modal } from "react-bootstrap";
 import "./register.css";
 import axios from "axios";
 import { Link, redirect } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const Register: React.FC = () => {
-  const [error, setError] = useState(false);
+  const [smShow, setSmShow] = useState(false);
   const [name, setName] = useState("");
   const [validName, setValidName] = useState(false);
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
-  const [messageError, setMessageError] = useState("");
+  const [message, setMessage] = useState("");
   let navigate = useNavigate();
 
   const ValidateName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,8 +53,8 @@ const Register: React.FC = () => {
         console.log(response);
       })
       .catch(function (error) {
-        // setError(true);
-        // setMessageError("usuário ja existe");
+        setSmShow(true);
+        setMessage("Tente cadastrar outro nome !");
         console.log("ERRO -> ", error);
       });
   };
@@ -90,9 +90,12 @@ const Register: React.FC = () => {
             <Form.Text>8 caracteres</Form.Text>
             <div>
               <Link to="/login">
-                <Button>Voltar</Button>
+                <Button style={{ marginRight: "1rem" }} variant="outline-dark">
+                  Voltar
+                </Button>
               </Link>
               <Button
+                variant="dark"
                 type="submit"
                 disabled={submit()}
                 onClick={handleButtonRegister}
@@ -100,7 +103,19 @@ const Register: React.FC = () => {
                 CADASTRAR
               </Button>
             </div>
-            {/* {error ? <ErrorLogin message={messageError} /> : ""} */}
+            <Modal
+              size="sm"
+              show={smShow}
+              onHide={() => setSmShow(false)}
+              aria-labelledby="example-modal-sizes-title-sm"
+            >
+              <Modal.Header closeButton>
+                <Modal.Title id="example-modal-sizes-title-sm">
+                  Notificação
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>{message}</Modal.Body>
+            </Modal>
           </Form>
         </Card.Body>
       </Card>

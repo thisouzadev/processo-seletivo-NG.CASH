@@ -92,7 +92,7 @@ export class AccountsController {
       const getMyUser = await usersRepository.findOne({
         where: { id: parseInt(req.user.id) },
         relations: {
-          accounts: { creditTransactions: true, debiteTransactionss: true },
+          accounts: { creditTransactions: true, debiteTransactions: true },
         },
       })
       if (!getMyUser) {
@@ -102,9 +102,11 @@ export class AccountsController {
 			getMyUser.accounts.creditTransactions = getMyUser?.accounts.creditTransactions.filter(
         (transactions) => String(transactions.createdAt.toISOString()).includes(transactionsDate)
       )
-      getMyUser.accounts.debiteTransactionss = getMyUser?.accounts.debiteTransactionss.filter(
+      getMyUser.accounts.debiteTransactions = getMyUser?.accounts.debiteTransactions.filter(
         (transactions) => String(transactions.createdAt.toISOString()).includes(transactionsDate)
       )
+     console.log( getMyUser.accounts.debiteTransactions);
+     
 			return res.status(200).json(getMyUser)
 		} catch (error) {
 			console.log(error)

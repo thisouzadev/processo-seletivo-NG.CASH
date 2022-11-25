@@ -1,5 +1,7 @@
 import { createContext, useContext, ReactNode, useState } from "react";
 type authContextType = {
+  smShow: boolean;
+  setSmShow: (showModal: boolean) => void;
   setUser: (user: any) => void;
   user: {
     accounts: {
@@ -11,6 +13,8 @@ type authContextType = {
   };
 };
 const authContextDefaultValues: authContextType = {
+  smShow: false,
+  setSmShow: (showModal: boolean) => {},
   setUser: () => {},
   user: {
     accounts: {
@@ -32,6 +36,7 @@ type Props = {
 };
 
 export function AuthProvider({ children }: Props) {
+  const [smShow, setSmShow] = useState<authContextType["smShow"]>(false);
   const [user, setUser] = useState<authContextType["user"]>({
     accounts: {
       id: 0,
@@ -43,6 +48,8 @@ export function AuthProvider({ children }: Props) {
   const value = {
     setUser,
     user,
+    setSmShow,
+    smShow,
   };
   return (
     <>
