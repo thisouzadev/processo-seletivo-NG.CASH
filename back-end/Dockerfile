@@ -4,6 +4,8 @@ WORKDIR /app-backend
 
 COPY . .
 
-RUN npm install
+RUN yarn install
 
-CMD ["npm", "start"]
+RUN yarn run migration:run
+
+CMD ["yarn","run", "dev"]
