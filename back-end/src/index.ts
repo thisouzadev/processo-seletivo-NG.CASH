@@ -12,6 +12,6 @@ AppDataSource.initialize().then(() => {
 	app.use(cors());
 	app.use(routes)
 
-	console.log(`Api rodando na porta 3001`);
-	return app.listen(process.env.PGPORT|| 3001)
+	const PORT = process.env.PORT || 3001;
+	return app.listen(PORT, () => console.log("'Trybe Todo List Api' running on port", PORT))
 })
