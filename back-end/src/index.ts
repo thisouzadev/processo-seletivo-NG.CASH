@@ -13,5 +13,5 @@ AppDataSource.initialize().then(() => {
 	app.use(routes)
 
 	console.log(`Api rodando na porta 3001`);
-	return app.listen(process.env.PORT|| 3001)
+	return app.listen(process.env.PGPORT|| 3001)
 })
