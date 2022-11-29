@@ -10,6 +10,4 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn run migration:run
-
 ENTRYPOINT [ "yarn", "run", "dev" ]
