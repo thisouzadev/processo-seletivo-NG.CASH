@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import ErrorLogin from "../../components/Error/index";
+import React, { useState } from "react";
 import { Button, Card, Form, Modal } from "react-bootstrap";
 import "./register.css";
 import axios from "axios";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+const HOST = process.env.REACT_APP_API_HOST || "localhost";
+const PROTOCOL = process.env.REACT_APP_API_PROTOCOL || "http";
 
 const Register: React.FC = () => {
   const [smShow, setSmShow] = useState(false);
@@ -13,7 +14,6 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
   const [message, setMessage] = useState("");
-  let navigate = useNavigate();
 
   const ValidateName = (event: React.ChangeEvent<HTMLInputElement>) => {
     const minLength = 3;
@@ -44,7 +44,7 @@ const Register: React.FC = () => {
     event.preventDefault();
 
     axios
-      .post("http://localhost:3001/users", {
+      .post(`${PROTOCOL}://${HOST}/users`, {
         username: name,
         password: password,
       })

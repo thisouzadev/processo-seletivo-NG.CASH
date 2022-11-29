@@ -1,10 +1,13 @@
 import axios from 'axios';
 
+const HOST = process.env.REACT_APP_API_HOST || "localhost";
+const PROTOCOL = process.env.REACT_APP_API_PROTOCOL || "http";
+
 class UserService {
   async login(username: string, password: string) {
     const response = await axios({
       method: 'post',
-      url: 'http://localhost:3001/login',
+      url: `${PROTOCOL}://${HOST}/login`,
       data: {
         username,
         password,
@@ -15,7 +18,7 @@ class UserService {
 
   async register(username: string, password:string) {
     const response = await axios
-    .post("http://localhost:3001/users", {
+    .post(`${PROTOCOL}://${HOST}/users`, {
       username: username,
       password: password,
     })
@@ -25,7 +28,7 @@ class UserService {
   async getUser(token: any){
     const response = await axios({
       method: 'get',
-      url: 'http://localhost:3001/balance',
+      url: `${PROTOCOL}://${HOST}/balance`,
       data: {},
       headers: { authorization: token },
     });
@@ -35,7 +38,7 @@ class UserService {
   async getAllUser(token: any){
     const response = await axios({
       method: 'get',
-      url: 'http://localhost:3001/users',
+      url: `${PROTOCOL}://${HOST}/users`,
       data: {},
       headers: { authorization: token },
     });
@@ -45,7 +48,7 @@ class UserService {
   async getByIdUser(token: any, userId: any){
     const response = await axios({
       method: 'get',
-      url: 'http://localhost:3001/userById',
+      url: `${PROTOCOL}://${HOST}/userById`,
       data: {
         id: userId
       },

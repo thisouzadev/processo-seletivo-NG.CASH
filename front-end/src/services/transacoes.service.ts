@@ -1,11 +1,14 @@
 import axios from 'axios';
 
+const HOST = process.env.REACT_APP_API_HOST || "localhost";
+const PROTOCOL = process.env.REACT_APP_API_PROTOCOL || "http";
+
 class TransactionsService {
   async depositar(value: number, username: string, token: any) {
     
     const response = await axios({
       method: 'post',
-      url: 'http://localhost:3001/transactions',
+      url: `${PROTOCOL}://${HOST}/transactions`,
       data: {
         value: value,
         username: username,
@@ -18,7 +21,7 @@ class TransactionsService {
   async getTransactions(token: any, transactionsDate: any){
     const response = await axios({
       method: 'get',
-      url: 'http://localhost:3001/transactions',
+      url: `${PROTOCOL}://${HOST}/transactions`,
       data: {},
       params: { transactionsDate: transactionsDate },
       headers: { authorization: token },
