@@ -43,7 +43,7 @@ const Register: React.FC = () => {
     event.preventDefault();
 
     axios
-      .post(`https://laughable-stone-production.up.railway.app/users`, {
+      .post(`http://laughable-stone-production.up.railway.app/users`, {
         username: name,
         password: password,
       })

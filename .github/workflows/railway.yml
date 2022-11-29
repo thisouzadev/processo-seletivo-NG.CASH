@@ -1,0 +1,30 @@
+# .github/workflows/railway.yml
+name: Deploy para Railway
+
+# Quando deve acontecer - Event
+on:
+  push:
+    branches:
+      - "main"
+
+# Passos para deploy
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do projeto
+        uses: actions/checkout@v3
+
+      - name: Install Railway CLI
+        uses: MadeByThePinsHub/setup-railway-cli-action@v0.1.0
+
+      - name: Deploy to Railway - Front-end
+        run: railway up --detach -s front-end
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
+      - name: Deploy to Railway - Back-end
+        run: railway up --detach -s back-end
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+
