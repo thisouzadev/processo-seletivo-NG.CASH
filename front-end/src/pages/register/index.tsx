@@ -44,7 +44,7 @@ const Register: React.FC = () => {
     event.preventDefault();
 
     axios
-      .post(`${PROTOCOL}://${HOST}/users`, {
+      .post(`https://laughable-stone-production.up.railway.app/users`, {
         username: name,
         password: password,
       })
