@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const HOST = process.env.REACT_APP_API_HOST || "localhost:3001";
-const PROTOCOL = process.env.REACT_APP_API_PROTOCOL || "http";
+const PROTOCOL = process.env.REACT_APP_API_PROTOCOL || "https";
 
 class TransactionsService {
   async depositar(value: number, username: string, token: any) {

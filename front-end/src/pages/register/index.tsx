@@ -4,7 +4,7 @@ import "./register.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 const HOST = process.env.REACT_APP_API_HOST || "localhost:3001";
-const PROTOCOL = process.env.REACT_APP_API_PROTOCOL || "http";
+const PROTOCOL = process.env.REACT_APP_API_PROTOCOL || "https";
 
 const Register: React.FC = () => {
   const [smShow, setSmShow] = useState(false);
