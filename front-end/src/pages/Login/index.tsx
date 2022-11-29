@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Container, Form, InputGroup } from "react-bootstrap";
+import { Container, Form, InputGroup, Modal } from "react-bootstrap";
 import logo from "../../assets/images/logo_ng.png";
 import { Link, useNavigate } from "react-router-dom";
 import UserService from "../../services/user.service";
 import "./login.css";
 const Login: React.FC = () => {
   const [name, setName] = useState("");
+  const [smShow, setSmShow] = useState(false);
+  const [message, setMessage] = useState("");
   const [validName, setValidName] = useState(false);
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
@@ -23,8 +25,8 @@ const Login: React.FC = () => {
         console.log(response);
       })
       .catch(function (error) {
-        // setError(true);
-        // setMessageError("usuário ja existe");
+        setSmShow(true);
+        setMessage("nome ou senha invalida !");
         console.log("ERRO -> ", error);
       });
   };
@@ -92,6 +94,19 @@ const Login: React.FC = () => {
               Criar conta
             </Button>
           </Link>
+          <Modal
+            size="sm"
+            show={smShow}
+            onHide={() => setSmShow(false)}
+            aria-labelledby="example-modal-sizes-title-sm"
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="example-modal-sizes-title-sm">
+                Notificação
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>{message}</Modal.Body>
+          </Modal>
         </Card.Body>
       </Card>
     </Container>
