@@ -2,11 +2,11 @@ FROM node:14-alpine
 
 EXPOSE 3001
 
-WORKDIR /opt/trybe-todo-list-backend
+WORKDIR /backend
 
 COPY package*.json .
 
-RUN npm install
+RUN yarn install
 
 RUN yarn run migration:run
 
