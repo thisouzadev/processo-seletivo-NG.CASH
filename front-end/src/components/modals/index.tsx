@@ -45,7 +45,7 @@ function UsernameNG(props: any) {
       })
       .catch(function (error: any) {
         setSmShow(true);
-        setMessage("usuário não existe");
+        setMessage("operação invalida !");
         console.log("ERRO -> ", error);
       });
   };

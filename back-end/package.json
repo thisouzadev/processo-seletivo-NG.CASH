@@ -2,6 +2,7 @@
   "name": "api-rest-typescript",
   "version": "1.0.0",
   "main": "index.js",
+  "homepage": "http://localhost:3000/login",
   "license": "MIT",
   "private": true,
   "scripts": {

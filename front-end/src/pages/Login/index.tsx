@@ -5,14 +5,13 @@ import { Container, Form, InputGroup } from "react-bootstrap";
 import logo from "../../assets/images/logo_ng.png";
 import { Link, useNavigate } from "react-router-dom";
 import UserService from "../../services/user.service";
-
+import "./login.css";
 const Login: React.FC = () => {
   const [name, setName] = useState("");
   const [validName, setValidName] = useState(false);
   const [password, setPassword] = useState("");
   const [validPassword, setValidPassword] = useState(false);
   let navigate = useNavigate();
-  console.log(name, password);
 
   const signup = async () => {
     new UserService()
@@ -51,8 +50,9 @@ const Login: React.FC = () => {
     if (validPassword && validName) return false;
     return true;
   };
+
   return (
-    <Container>
+    <Container className={"login"}>
       <Card style={{ width: "18rem", display: "flex" }}>
         {/* <img src={logo} alt="logo" /> */}
         <Card.Img variant="top" src={logo} />

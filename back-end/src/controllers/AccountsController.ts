@@ -65,7 +65,10 @@ export class AccountsController {
   transactions.debitedAccountId = getMyUser.accounts.id
   transactions.creditedAccountId = getDestinationUser.accounts.id
 
-  if (value > myAccount.balance ) {
+  if (transactions.debitedAccountId == transactions.creditedAccountId) {
+    return res.status(401).json({ message: 'invalid operation' })
+  }
+  if (value > myAccount.balance || value == 0 ) {
     return res.status(404).json({ message: 'you do not have enough money' })
   }
   myAccount.balance -= value 
@@ -96,7 +99,7 @@ export class AccountsController {
         },
       })
       if (!getMyUser) {
-        return res.status(404).json({ message: '' })
+        return res.status(404).json({ message: 'user not found' })
       }
       
 			getMyUser.accounts.creditTransactions = getMyUser?.accounts.creditTransactions.filter(
@@ -105,8 +108,7 @@ export class AccountsController {
       getMyUser.accounts.debiteTransactions = getMyUser?.accounts.debiteTransactions.filter(
         (transactions) => String(transactions.createdAt.toISOString()).includes(transactionsDate)
       )
-     console.log( getMyUser.accounts.debiteTransactions);
-     
+
 			return res.status(200).json(getMyUser)
 		} catch (error) {
 			console.log(error)

@@ -1,11 +1,11 @@
 FROM node:18.12.1-alpine
 
-WORKDIR /app-backend
+WORKDIR /backend
 
-COPY . .
+COPY package*.json .
 
 RUN yarn install
 
-RUN yarn run migration:run
+COPY . .
 
-CMD ["yarn","run", "dev"]
+ENTRYPOINT [ "yarn", "run", "migration:run" ]

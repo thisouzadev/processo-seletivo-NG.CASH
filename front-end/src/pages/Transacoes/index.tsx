@@ -34,30 +34,22 @@ const Transacoes: React.FC = () => {
   const [transactions, setTransactions] = useState<TransactionsType>();
   const [modalShow, setModalShow] = useState(false);
   const [getDate, setGetDate] = useState("");
-  const token = localStorage.getItem("token");
   const [filterDate, setFilterDate] = useState(false);
-  const [getId, setGetId] = useState("");
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
-    new UserService()
-      .getUser(token)
-      .then(({ data }) => {
-        setUser(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    new UserService()
-      .getByIdUser(token, 1)
-      .then(({ data }) => {
-        data.username;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     new TransactionsService()
       .getTransactions(token, getDate)
       .then(({ data }) => {
         setTransactions(data.accounts);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    new UserService()
+      .getUser(token)
+      .then(({ data }) => {
+        setUser(data);
       })
       .catch((err) => {
         console.log(err);
@@ -80,6 +72,7 @@ const Transacoes: React.FC = () => {
     setFilterDate(!filterDate);
     setGetDate("");
   };
+
   return (
     <div>
       <header className="header">

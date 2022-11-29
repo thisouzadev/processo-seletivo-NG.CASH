@@ -49,7 +49,8 @@ const Register: React.FC = () => {
         password: password,
       })
       .then(function (response) {
-        navigate("/login");
+        setSmShow(true);
+        setMessage("cadastro feito com sucesso !");
         console.log(response);
       })
       .catch(function (error) {
@@ -57,6 +58,11 @@ const Register: React.FC = () => {
         setMessage("Tente cadastrar outro nome !");
         console.log("ERRO -> ", error);
       });
+  };
+  const handleKeyPress = (event: any) => {
+    if (event.key === "Enter") {
+      handleButtonRegister;
+    }
   };
   return (
     <div className="container mt-5">
@@ -98,6 +104,7 @@ const Register: React.FC = () => {
                 variant="dark"
                 type="submit"
                 disabled={submit()}
+                onKeyPress={handleKeyPress}
                 onClick={handleButtonRegister}
               >
                 CADASTRAR
