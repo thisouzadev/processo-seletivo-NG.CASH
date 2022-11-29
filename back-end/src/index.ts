@@ -13,5 +13,5 @@ AppDataSource.initialize().then(() => {
 	app.use(routes)
 
 	const PORT = process.env.PORT || 3001;
-	return app.listen(PORT, () => console.log("'Trybe Todo List Api' running on port", PORT))
+	return app.listen(PORT, () => console.log("'NG Cash Api' running on port", PORT))
 })
