@@ -3,7 +3,7 @@ import { Button, Card, Form, Modal } from "react-bootstrap";
 import "./register.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-const HOST = process.env.REACT_APP_API_HOST || "localhost";
+const HOST = process.env.REACT_APP_API_HOST || "localhost:3001";
 const PROTOCOL = process.env.REACT_APP_API_PROTOCOL || "http";
 
 const Register: React.FC = () => {
@@ -43,7 +43,7 @@ const Register: React.FC = () => {
     event.preventDefault();
 
     axios
-      .post(`http://localhost:3001/users`, {
+      .post(`${PROTOCOL}://${HOST}/users`, {
         username: name,
         password: password,
       })
